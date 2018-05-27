@@ -1,0 +1,26 @@
+[
+    {
+        "roomNumber":"101",
+        "available":false
+    },
+    {
+        "roomNumber":"102",
+        "available":true
+    },
+    {
+        "roomNumber":"103",
+        "available":false
+    },
+    {
+        "roomNumber":"104",
+        "available":false
+    },
+    {
+        "roomNumber":"105",
+        "available":true
+    },
+    {
+        "roomNumber":"106",
+        "available":true
+    }
+]
