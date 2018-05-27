@@ -1,51 +1,27 @@
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-        // console.log(typeof xhr.responseText); to check what tyoe the response is. In this case it is a string. 
-        //We can't access the bits and pieces of the data like individual employees
-        //names or their status when it's in a big long string like this.
-        //We need to turn this string into real JavaScript and here's how.
-        var employees = JSON.parse(xhr.responseText);
-        
-        // console.log(typeof employees); Check the response type again and this time it is an object
-        // console.log(employees); gives an array
-
+$(document).ready(function(){
+    //$.getJSON(url, data, callback function)
+    var url = "../data/employees.json";
+    $.getJSON(url, function (response) {
         var statusHTML = '<ul class="bulleted">';
-        for (var i=0; i<employees.length; i++) {
-            if (employees[i].inoffice === true) {
-                statusHTML+='<li class="in">';
+        //$.each(datta,array or object, callback function)
+        $.each(response, function (index, employee) {
+            if (employee.inoffice === true) {
+                statusHTML += "<li class='in'>";
             } else {
-                statusHTML+='<li class="out">';
+                statusHTML += "<li class='out'>";
             }
-            statusHTML+=employees[i].name;
-            statusHTML+='</li>';
-        }
-        statusHTML+='</ul>';
-        document.getElementById('employeeList').innerHTML = statusHTML;
-    }
-};
+            statusHTML += employee.name + "</li>";
 
-xhr.open('GET', '../data/employees.json');
-xhr.send();
+        });
+        statusHTML += '</ul>'
+        $('#employeeList').html(statusHTML);
+    });//end getJSON
 
-var request = new XMLHttpRequest();
-request.onreadystatechange = function () {
-    if (request.readyState === 4) {
-        var Rooms = JSON.parse(request.responseText);
-        var statusHTML = '<ul class="rooms">';
-        for (var i=0; i<Rooms.length; i++) {
-            if (Rooms[i].available === true) {
-                statusHTML+='<li class="empty">';
-            } else {
-                statusHTML+='<li class="full">';
-            }
-            statusHTML+=Rooms[i].roomNumber;
-            statusHTML+='</li>';
-        }
-        statusHTML+='</ul>';
-        document.getElementById('roomList').innerHTML = statusHTML;
-    }
-};
+});//end ready. 
+//$(document).ready(function() - This function is a jQuery thing, it waits for all the HTML in a 
+//file to load into the browser before running any of the JAVA script inside it.
+//This is required only when you include your
+//JavaScript in the head of your document before html.
 
-request.open('GET', '../data/rooms.json');
-request.send();
+// 
+
